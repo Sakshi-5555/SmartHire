@@ -1,0 +1,107 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+<section class="analyzer-section">
+    <div class="analyzer-container">
+        <h1>Resume Analysis Complete</h1>
+
+        <p>The predicted job category for your resume is:</p>
+
+        <h2>{{ category }}</h2>
+
+        <h2>Top 3 Job Category Matches</h2>
+
+        <div class="prediction-list">
+            {% for item in top_categories %}
+                <div class="prediction-item">
+                    <h3>{{ item.category }}</h3>
+
+                    <p>Estimated confidence: {{ item.confidence }}%</p>
+
+                    <div class="confidence-track">
+                        <div class="confidence-fill"
+                             style="width: {{ item.confidence }}%;">
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <p>
+            These scores are model probability estimates, not guarantees
+            that your resume matches a particular job category.
+        </p>
+
+        <p>Confidence: {{ confidence }}%</p>
+
+        <hr>
+
+        <h2>Recommended Jobs for You</h2>
+        <p>Jobs ranked according to the skills found in your resume.</p>
+
+        {% if recommended_jobs %}
+            <div class="prediction-list">
+                {% for job in recommended_jobs %}
+                    <div class="prediction-item">
+                        <h3>{{ job.title }}</h3>
+
+                        <p>
+                            <strong>Company:</strong>
+                            {{ job.company }}
+                        </p>
+
+                        <p>
+                            <strong>Location:</strong>
+                            {{ job.location }}
+                        </p>
+
+                        {% if job.salary %}
+                            <p>
+                                <strong>Salary:</strong>
+                                {{ job.salary }}
+                            </p>
+                        {% endif %}
+
+                        <p>
+                            <strong>Skill Match:</strong>
+                            {{ job.match_score }}%
+                        </p>
+
+                        <div class="confidence-track">
+                            <div class="confidence-fill"
+                                 style="width: {{ job.match_score }}%;">
+                            </div>
+                        </div>
+
+                        <p>
+                            <strong>Matched Skills:</strong>
+                            {{ job.matched_skills | join(', ') }}
+                        </p>
+
+                        <a href="{{ url_for('apply_job', job_id=job.id) }}"
+                           class="apply-btn">
+                            Apply for This Job
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>
+                No matching jobs found. Try a resume containing skills
+                relevant to the jobs listed on SmartHire.
+            </p>
+        {% endif %}
+
+        <p>
+            Skill match percentages show the proportion of listed job
+            requirements found in the resume. They are estimates, not
+            guarantees of suitability or hiring success.
+        </p>
+
+        <a href="{{ url_for('analyzer') }}" class="apply-btn">
+            Analyze Another Resume
+        </a>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,31 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+<section class="analyzer-section">
+    <div class="analyzer-container">
+        <h1>AI Resume Analyzer</h1>
+
+        <p>
+            Upload your resume in PDF format to predict
+            the job category that best matches its content.
+        </p>
+
+        <form action="{{ url_for('analyze_resume') }}"
+              method="POST" enctype="multipart/form-data">
+
+            <label for="resume">Choose your resume (PDF)</label>
+
+            <input type="file"
+                   id="resume"
+                   name="resume"
+                   accept=".pdf,application/pdf"
+                   required>
+
+            <button type="submit" class="apply-btn">
+                Analyze Resume
+            </button>
+        </form>
+    </div>
+</section>
+{% endblock %}

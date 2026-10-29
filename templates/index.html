@@ -1,0 +1,37 @@
+
+{% extends "base.html" %}
+
+{% block title %}Home | SmartHire{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div class="hero-content">
+        <p class="eyebrow">YOUR CAREER STARTS HERE</p>
+
+        <h1>Find the job that matches your skills.</h1>
+
+        <p class="description">
+            Explore job opportunities and discover how your skills
+            match your dream career.
+        </p>
+
+        <div class="hero-buttons">
+            <a href="/jobs" class="button">Explore Jobs</a>
+
+            <a href="{{ url_for('analyzer') }}" class="apply-btn">
+                Analyze Your Resume
+            </a>
+        </div>
+    </div>
+
+    <div class="hero-image">
+       <div class="hero-image">
+    <img
+        src="{{ url_for('static', filename='images/career-background.png') }}"
+        alt="Career illustration"
+        onerror="this.style.display='none'; this.parentElement.innerHTML='<p>Image failed to load</p>';"
+    >
+</div>
+    </div>
+</section>
+{% endblock %}
